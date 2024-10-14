@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as PostsIndexImport } from './routes/posts/index'
+import { Route as PostsYearMonthSlugImport } from './routes/posts/$year.$month.$slug'
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const IndexRoute = IndexImport.update({
 
 const PostsIndexRoute = PostsIndexImport.update({
   path: '/posts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostsYearMonthSlugRoute = PostsYearMonthSlugImport.update({
+  path: '/posts/$year/$month/$slug',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,6 +63,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/posts/$year/$month/$slug': {
+      id: '/posts/$year/$month/$slug'
+      path: '/posts/$year/$month/$slug'
+      fullPath: '/posts/$year/$month/$slug'
+      preLoaderRoute: typeof PostsYearMonthSlugImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -66,12 +79,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/posts': typeof PostsIndexRoute
+  '/posts/$year/$month/$slug': typeof PostsYearMonthSlugRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/posts': typeof PostsIndexRoute
+  '/posts/$year/$month/$slug': typeof PostsYearMonthSlugRoute
 }
 
 export interface FileRoutesById {
@@ -79,14 +94,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/posts/': typeof PostsIndexRoute
+  '/posts/$year/$month/$slug': typeof PostsYearMonthSlugRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/posts'
+  fullPaths: '/' | '/about' | '/posts' | '/posts/$year/$month/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/posts'
-  id: '__root__' | '/' | '/about' | '/posts/'
+  to: '/' | '/about' | '/posts' | '/posts/$year/$month/$slug'
+  id: '__root__' | '/' | '/about' | '/posts/' | '/posts/$year/$month/$slug'
   fileRoutesById: FileRoutesById
 }
 
@@ -94,12 +110,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   PostsIndexRoute: typeof PostsIndexRoute
+  PostsYearMonthSlugRoute: typeof PostsYearMonthSlugRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   PostsIndexRoute: PostsIndexRoute,
+  PostsYearMonthSlugRoute: PostsYearMonthSlugRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,7 +134,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/posts/"
+        "/posts/",
+        "/posts/$year/$month/$slug"
       ]
     },
     "/": {
@@ -127,6 +146,9 @@ export const routeTree = rootRoute
     },
     "/posts/": {
       "filePath": "posts/index.tsx"
+    },
+    "/posts/$year/$month/$slug": {
+      "filePath": "posts/$year.$month.$slug.tsx"
     }
   }
 }
