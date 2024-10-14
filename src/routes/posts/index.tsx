@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const Route = createFileRoute("/posts/")({
   component: PostsComponent,
 });
@@ -17,7 +19,7 @@ function PostsComponent() {
 
   useEffect(() => {
     const fetchPostsMetadata = async () => {
-      const response = await fetch("./posts/metadata.json", {
+      const response = await fetch(`${BASE_URL}/posts/metadata.json`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

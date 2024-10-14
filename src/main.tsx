@@ -6,6 +6,7 @@ import { routeTree } from "./routeTree.gen";
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
+  basepath: "/ben-log",
 });
 
 // Register things for typesafety

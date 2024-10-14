@@ -2,6 +2,8 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const Route = createFileRoute("/posts/$year/$month/$slug")({
   component: PostComponent,
 });
@@ -17,7 +19,7 @@ function PostComponent() {
     const fetchPostContent = async () => {
       try {
         const response = await fetch(
-          `/posts/${params.year}/${params.month}/${params.slug}.md`,
+          `${BASE_URL}/posts/${params.year}/${params.month}/${params.slug}.md`,
           {
             headers: {
               "Content-Type": "text/markdown",
