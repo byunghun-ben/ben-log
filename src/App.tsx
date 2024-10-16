@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
   return (
     <>
@@ -11,7 +12,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Edit <code>src/App.tsx</code> and save to test HMR {count2}
         </p>
       </div>
       <p className="read-the-docs">
