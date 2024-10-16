@@ -5,24 +5,29 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "dev": "vite --port=3001",
-    "build": "vite build && cp dist/index.html dist/404.html",
-    "preview": "vite preview --port=3002",
-    "start": "vite"
+    "dev": "node server",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "preview": "cross-env NODE_ENV=production node server"
   },
   "devDependencies": {
     "@tanstack/router-plugin": "^1.65.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "cross-env": "^7.0.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.8"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.65.0",
     "@tanstack/router-devtools": "^1.65.0",
+    "compression": "^1.7.4",
+    "express": "^4.21.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-markdown": "^9.0.1"
+    "react-markdown": "^9.0.1",
+    "sirv": "^3.0.0"
   }
 }
